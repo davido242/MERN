@@ -10,16 +10,17 @@ const templatePath = path.join(__dirname, "../templates")
 app.use(express.json());
 app.set("view engine", "hbs");
 app.set("views", templatePath);
+app.use(express.urlencoded({ extended: false }))
 
 
 
 app.get("/", (req, res) => {
     res.render("login");
-    console.log(("My Login Page Loaded"));
+    console.log(("Login Page Loaded"));
 })
 app.get("/signup", (req, res) => {
     res.render("signup");
-    console.log(("My Signup Page Loaded"));
+    console.log(("Signup Page Loaded"));
 })
 
 app.post("/signup", async (req, res) => {
@@ -30,6 +31,20 @@ app.post("/signup", async (req, res) => {
 
     await collection.insertMany([data])
     res.render("home")
+})
+
+app.post("/login", async (req, res) => {
+    try{
+        const check = await collection.findOne({name:req.body.name})
+
+        if(check.password === req.body.password) {
+            res.render("home")
+        }else {
+            res.send("Wrong Password")
+        }
+    }catch {
+        res.send("Wrong Details")
+    }
 })
 app.listen(3000, () => {
     console.log("Port connected");
