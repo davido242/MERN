@@ -15,6 +15,10 @@ app.use(express.urlencoded({ extended: false }))
 
 
 app.get("/", (req, res) => {
+    res.render("home");
+    console.log(("Landing Page Loaded"));
+})
+app.get("/login", (req, res) => {
     res.render("login");
     console.log(("Login Page Loaded"));
 })
@@ -30,7 +34,8 @@ app.post("/signup", async (req, res) => {
     }
 
     await collection.insertMany([data])
-    res.render("home")
+    res.render("dashboard");
+    console.log(("Dashboard Page Loaded"));
 })
 
 app.post("/login", async (req, res) => {
