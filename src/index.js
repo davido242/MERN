@@ -12,11 +12,12 @@ app.set("view engine", "hbs");
 app.set("views", templatePath);
 app.use(express.urlencoded({ extended: false }))
 
+app.use(express.static("public"));
 
 
 app.get("/", (req, res) => {
     res.render("home");
-    console.log(("Landing Page Loaded"));
+    console.log("file: index.js:18 ~ app.get ~ landing page loaded");
 })
 app.get("/login", (req, res) => {
     res.render("login");
@@ -34,7 +35,7 @@ app.post("/signup", async (req, res) => {
     }
 
     await collection.insertMany([data])
-    res.render("dashboard");
+    res.render("home");
     console.log(("Dashboard Page Loaded"));
 })
 
@@ -42,15 +43,17 @@ app.post("/login", async (req, res) => {
     try{
         const check = await collection.findOne({name:req.body.name})
 
-        if(check.password === req.body.password) {
-            res.render("home")
+        if(check.password == req.body.password) {
+            res.render("dashboard");
         }else {
             res.send("Wrong Password")
         }
-    }catch {
+    }catch(err){
+        console.log("🚀 ~ file: index.js:52 ~ app.post ~ err:", err)
         res.send("Wrong Details")
     }
 })
+
 app.listen(3000, () => {
-    console.log("Port connected");
+    console.log("Port connected, listening on port 3000");
 })

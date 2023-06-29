@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+</head>
+<body>
+    <h2>Learning Promise and Async/Await</h2>
+
+    <script>
+        let p = new Promise((resolve, reject) => {
+            let a = 1 + 1;
+            if (a == 2) {
+                resolve("Success");
+            }else {
+                reject("Failed");
+            }
+        })
+        
+        p.then((message) => {
+            console.log("This is the then " + message)
+        }).catch((message) => {
+            console.log("This is a catch " + message)
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promiseAll</title>
+</head>
+<body>
+    <h2>Learning promiseAll</h2>
+
+    <script>
+        const recordVideoOne = new Promise((resolve, reject) => {
+            resolve("Video 1 recorded")
+        })
+        const recordVideoTwo = new Promise((resolve, reject) => {
+            resolve("Video 2 recorded")
+        })
+        const recordVideoThree = new Promise((resolve, reject) => {
+            resolve("Video 3 recorded")
+        })
+
+        Promise.race([
+            recordVideoOne,
+            recordVideoTwo,
+            recordVideoThree
+        ]).then((messages) => {
+            console.log(messages)
+        })
+    </script>
+    
+</body>
+</html>

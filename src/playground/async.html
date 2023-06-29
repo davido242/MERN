@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise</title>
+  </head>
+  <body>
+    <h2>Async/Await</h2>
+
+    <script>
+      function makeRequest(location) {
+        return new Promise((resolve, reject) => {
+          console.log(`Making a request to ${location}`);
+          if (location == "Google") {
+            resolve("Google Says Hi");
+          } else {
+            reject("We can only talk to Google");
+          }
+        });
+      }
+
+      function processRequest(response) {
+        return new Promise((resolve, reject) => {
+          console.log("Processing response");
+          resolve(`Extra Information + ${response}`);
+        });
+      }
+
+      // makeRequest("Googler").then(response => {
+      //   console.log('Response Recieved')
+      //   return processRequest(response)
+      // }).then((processResponse) => {
+      //   console.log(processResponse)
+      // }).catch(anythin => {
+      //   console.log("🚀 ~ file: async.html:36 ~ makeRequest ~ anythin:", anythin)
+      // })
+
+      async function doWork() {
+        try {
+          const response = await makeRequest("Google");
+          console.log("Response Recieved");
+          const processedResponse = await processRequest(response);
+          console.log(processedResponse);
+        } catch (err) {
+          console.log("error: ", err);
+        }
+      }
+
+      function myDisplayer(greeting) {
+        return greeting;
+      }
+      function myFirst() {
+        // myDisplayer("Hello");
+        console.log("Hello");
+      }
+
+      function mySecond() {
+        // myDisplayer("Goodbye");
+        console.log("Goodbye");
+      }
+
+      // setInterval(myFunction, 3000);
+      // function myFunction() {
+      //   alert("My Fucking Function");
+      // }
+
+      doWork();
+
+      let myPromise = new Promise(function (myResolve, myReject) {
+        setTimeout(function () {
+          myResolve("I love You !!");
+        }, 3000);
+      });
+
+      myPromise.then(function (anything) {
+        console.log(anything, "It is");
+      });
+
+      async function myFunction() {
+        return "Hello";
+        const shout = await 20;
+        console.log(shout);
+      }
+
+      myFunction().then(result => {
+        console.log("Success", result);
+      })
+    </script>
+  </body>
+</html>

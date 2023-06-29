@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise</title>
+  </head>
+  <body>
+    <h2>Learning Promise and Async/Await2</h2>
+
+    <script>
+      const userLeft = false;
+      const userWatchingCatMeme = false;
+
+    //   function watchTutorialCallBack(callback, errorCallback) {
+    //     if (userLeft) {
+    //       errorCallback({
+    //         name: "User Left",
+    //         message: ":(",
+    //       });
+    //     } else if (userWatchingCatMeme) {
+    //       errorCallback({
+    //         name: "user Watching Cat Meme",
+    //         message: "Webdev Simplidied < Cat",
+    //       });
+    //     } else {
+    //       callback("Thumbs up and Subscribe");
+    //     }
+    //   }
+
+    //   watchTutorialCallBack(
+    //     (message) => {
+    //       console.log("Success: ", message);
+    //     },
+    //     (error) => {
+    //       console.log(error.name, "", error.message);
+    //     }
+    //   );
+
+      function watchTutorialPromise() {
+        return new Promise((resolve, reject) => {
+          if (userLeft) {
+            reject({
+              name: "User Left",
+              message: ":(",
+            });
+          } else if (userWatchingCatMeme) {
+            reject({
+              name: "user Watching Cat Meme",
+              message: "Webdev Simplidied < Cat",
+            });
+          } else {
+            resolve("Thumbs up and Subscribe");
+          }
+        });
+      }
+
+      watchTutorialPromise().then((message) => {
+          console.log("Success: ", message);
+        }).catch((error) => {
+          console.log(error.name, "", error.message);
+        });
+    </script>
+  </body>
+</html>
