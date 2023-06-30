@@ -1,5 +1,5 @@
 {
-  "include": ["src", "src/password.js"],
+  "include": ["src", "src/playground/password.js"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

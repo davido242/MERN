@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 
 const app = express();
 const path = require("path");
@@ -35,16 +36,17 @@ app.post("/signup", async (req, res) => {
     }
 
     await collection.insertMany([data])
-    res.render("home");
+    res.send("Registration was successful");
     console.log(("Dashboard Page Loaded"));
 })
 
 app.post("/login", async (req, res) => {
     try{
         const check = await collection.findOne({name:req.body.name})
+        // const checkName = await collection.findOne({name:req.body.name})
 
         if(check.password == req.body.password) {
-            res.render("dashboard");
+            res.render("dashboard", {title: check.name});
         }else {
             res.send("Wrong Password")
         }
