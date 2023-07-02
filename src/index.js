@@ -30,29 +30,33 @@ app.get("/signup", (req, res) => {
 })
 
 app.post("/signup", async (req, res) => {
-    const data = {
-        name: req.body.name,
-        password: req.body.password
-    }
+    const { name, password } = req.body;
+    const hasher = await bcrypt.hash(password, 10)
 
-    await collection.insertMany([data])
+    await collection.insertMany({
+        name,
+        password: hasher
+    })
     res.send("Registration was successful");
-    console.log(("Dashboard Page Loaded"));
 })
 
 app.post("/login", async (req, res) => {
-    try{
-        const check = await collection.findOne({name:req.body.name})
-        // const checkName = await collection.findOne({name:req.body.name})
-
-        if(check.password == req.body.password) {
-            res.render("dashboard", {title: check.name});
-        }else {
-            res.send("Wrong Password")
+    try {
+        const { password } = req.body
+        const user = await collection.findOne({name:req.body.name})
+        if(!user){
+            res.send("No user with such username")
+            console.log("Wrong Username")
         }
-    }catch(err){
-        console.log("🚀 ~ file: index.js:52 ~ app.post ~ err:", err)
-        res.send("Wrong Details")
+        const isvalid = await bcrypt.compare(password, user.password)
+        if(!isvalid) {
+            res.send("Wrong Password Mehnn!")            
+        } else{
+            res.render("dashboard", {title: user.name});
+        }        
+    } catch (error) {
+        res.send("Dammnn Hommie");
+        console.log("🚀 ~ file: index.js:47 ~ app.post ~ error:", error)
     }
 })
 
